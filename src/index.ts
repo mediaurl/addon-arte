@@ -7,6 +7,9 @@ export const arteAddon = createWorkerAddon({
     description: "ARTE, the European culture TV channel",
     version: "0.0.0",
     itemTypes: ["channel"],
+    defaultDirectoryOptions: {
+        imageShape: "landscape",
+    },
 });
 
 arteAddon.registerActionHandler("directory", directoryHandler);

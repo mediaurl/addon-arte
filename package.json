@@ -8,13 +8,15 @@
     "develop": "watched-sdk start"
   },
   "dependencies": {
-    "@watchedcom/sdk": "^0.21.2"
+    "@watchedcom/sdk": "^0.21.3",
+    "cheerio": "^1.0.0-rc.3"
   },
   "devDependencies": {
-    "typescript": "^3.8.3",
+    "@types/cheerio": "^0.22.17",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.9",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "typescript": "^3.8.3"
   },
   "husky": {
     "hooks": {
