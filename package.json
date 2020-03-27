@@ -1,0 +1,30 @@
+{
+  "name": "watched-addon-arte",
+  "version": "0.0.0",
+  "main": "dist",
+  "scripts": {
+    "build": "tsc",
+    "start": "watched-sdk start --prod",
+    "develop": "watched-sdk start"
+  },
+  "dependencies": {
+    "@watchedcom/sdk": "^0.21.2"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.9",
+    "prettier": "^2.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
