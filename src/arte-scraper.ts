@@ -1,3 +1,6 @@
+/**
+ * Not used
+ */
 import * as cheerio from "cheerio";
 
 export interface ArteSingleItem {}
