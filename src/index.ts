@@ -11,6 +11,9 @@ export const arteAddon = createWorkerAddon({
         imageShape: "landscape",
     },
     defaultDirectoryFeatures: {
+        search: {
+            enabled: true,
+        },
         sort: [
             {
                 id: "MOST_VIEWED",

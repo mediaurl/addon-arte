@@ -10,6 +10,7 @@ import {
     StreamResponse,
     SingleItemResponse,
 } from "./arte";
+import * as striptags from "striptags";
 
 const supportedLanguages = ["en", "fr", "de", "es", "pl", "it"];
 
@@ -27,7 +28,7 @@ const mapItem = (_: ListItem): ChannelItem => {
         ids: { id: _.programId },
         name: [_.title, _.subtitle].filter((_) => _).join(" - "),
         images: { poster },
-        description: _.teaserText ?? _.shortDescription,
+        description: striptags(_.shortDescription ?? _.teaserText),
     };
 };
 
@@ -38,11 +39,27 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
     console.log("directory", input);
     const sort = input.sort || "MOST_VIEWED";
     const page: number = <number>input.cursor || 1;
+    const language = detectLanguage(input);
+
+    if (input.search) {
+        const searchP = ctx
+            .fetch(
+                `https://www.arte.tv/guide/api/emac/v3/${language}/web/pages/SEARCH/?` +
+                    querystring.stringify({
+                        mainZonePage: page,
+                        query: input.search,
+                    })
+            )
+            .then<SingleItemResponse>((resp) => resp.json());
+
+        return {
+            items: (await searchP).zones[0].data.map(mapItem),
+            nextCursor: null,
+        };
+    }
 
     const url =
-        `https://www.arte.tv/guide/api/emac/v3/${detectLanguage(
-            input
-        )}/web/data/VIDEO_LISTING/?` +
+        `https://www.arte.tv/guide/api/emac/v3/${language}/web/data/VIDEO_LISTING/?` +
         querystring.stringify({
             imageFormats: "landscape",
             page,
