@@ -50,9 +50,9 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
             limit: 20,
         });
 
-    const jsonData = (await ctx
+    const jsonData = await ctx
         .fetch(url)
-        .then((resp) => resp.json())) as VideoListResponse;
+        .then<VideoListResponse>((resp) => resp.json());
 
     return {
         items: jsonData.data.map(mapItem),
@@ -67,7 +67,9 @@ export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
     const language = detectLanguage(input);
 
     const itemDataP = ctx
-        .fetch(`https://www.arte.tv/guide/api/emac/v3/en/web/programs/${id}`)
+        .fetch(
+            `https://www.arte.tv/guide/api/emac/v3/${language}/web/programs/${id}`
+        )
         .then<SingleItemResponse>((resp) => resp.json())
         .then((_) => _.zones[0].data.map(mapItem));
 
@@ -92,8 +94,13 @@ export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
         })
         .then<StreamResponse>((resp) => resp.json());
 
-    const firstStreamObj = (await streamDataP).data.attributes.streams[0];
-    const firstItem = (await itemDataP)[0];
+    const [streamData, itemData] = await Promise.all([
+        streamDataP,
+        itemDataP,
+    ]).catch(() => Promise.reject(`Unable to get data for ${id}`));
+
+    const firstStreamObj = streamData.data.attributes.streams[0];
+    const firstItem = itemData[0];
 
     if (!firstStreamObj) {
         throw new Error(
