@@ -8,14 +8,14 @@
     "develop": "watched-sdk start"
   },
   "dependencies": {
-    "@watchedcom/sdk": "^0.21.4",
+    "@watchedcom/sdk": "^0.22.2",
     "qs": "^6.9.3",
     "striptags": "^3.1.1"
   },
   "devDependencies": {
     "@types/qs": "^6.9.1",
     "husky": "^4.2.3",
-    "lint-staged": "^10.0.10",
+    "lint-staged": "^10.1.1",
     "prettier": "^2.0.2",
     "typescript": "^3.8.3"
   },
