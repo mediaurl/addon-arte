@@ -4,18 +4,19 @@
   "main": "dist",
   "scripts": {
     "build": "tsc",
-    "start": "watched-sdk start --prod",
-    "develop": "watched-sdk start"
+    "start": "watched-sdk start --single --prod",
+    "develop": "watched-sdk start --single"
   },
   "dependencies": {
-    "@watchedcom/sdk": "^0.21.4",
+    "@watchedcom/sdk": "^0.25.1",
+    "cheerio": "^0.22.0",
     "qs": "^6.9.3",
     "striptags": "^3.1.1"
   },
   "devDependencies": {
     "@types/qs": "^6.9.1",
     "husky": "^4.2.3",
-    "lint-staged": "^10.0.10",
+    "lint-staged": "^10.1.1",
     "prettier": "^2.0.2",
     "typescript": "^3.8.3"
   },
