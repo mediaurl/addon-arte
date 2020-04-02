@@ -7,6 +7,7 @@ export const arteAddon = createWorkerAddon({
     description: "ARTE, the European culture TV channel",
     version: "0.0.0",
     itemTypes: ["channel"],
+    icon: "http://www.arte.tv/favicon.ico",
     defaultDirectoryOptions: {
         imageShape: "landscape",
     },
