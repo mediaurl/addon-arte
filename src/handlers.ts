@@ -15,6 +15,7 @@ import * as striptags from "striptags";
 const supportedLanguages = ["en", "fr", "de", "es", "pl", "it"];
 
 const detectLanguage = (input: DefaultAddonRequest): string => {
+    return "it";
     if (supportedLanguages.indexOf(input.language) !== -1) {
         return input.language;
     }
@@ -113,7 +114,9 @@ export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
     const [streamData, itemData] = await Promise.all([
         streamDataP,
         itemDataP,
-    ]).catch(() => Promise.reject(`Unable to get data for ${id}`));
+    ]).catch(() =>
+        Promise.reject(`Unable to parse arte JSON output for ${id}`)
+    );
 
     const firstStreamObj = streamData.data.attributes.streams[0];
     const firstItem = itemData[0];
