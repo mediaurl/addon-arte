@@ -36,7 +36,7 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
     input,
     ctx
 ) => {
-    console.log("directory", input);
+    // console.log("directory", input);
     const sort = input.sort || "MOST_VIEWED";
     const page: number = <number>input.cursor || 1;
     const language = detectLanguage(input);
@@ -78,8 +78,7 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
 };
 
 export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
-    console.log("item", input);
-
+    // console.log("item", input);
     const id = input.ids.id;
     const language = detectLanguage(input);
 
