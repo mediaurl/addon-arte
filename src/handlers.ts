@@ -15,7 +15,6 @@ import * as striptags from "striptags";
 const supportedLanguages = ["en", "fr", "de", "es", "pl", "it"];
 
 const detectLanguage = (input: DefaultAddonRequest): string => {
-    return "it";
     if (supportedLanguages.indexOf(input.language) !== -1) {
         return input.language;
     }
@@ -37,7 +36,7 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
     input,
     ctx
 ) => {
-    // console.log("directory", input);
+    await ctx.requestCache(input);
     const sort = input.sort || "MOST_VIEWED";
     const page: number = <number>input.cursor || 1;
     const language = detectLanguage(input);
@@ -80,6 +79,7 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
 
 export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
     // console.log("item", input);
+    ctx.requestCache([input.ids.id, input.language]);
     const id = input.ids.id;
     const language = detectLanguage(input);
 
