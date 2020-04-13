@@ -36,7 +36,7 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
     input,
     ctx
 ) => {
-    // console.log("directory", input);
+    await ctx.requestCache(input);
     const sort = input.sort || "MOST_VIEWED";
     const page: number = <number>input.cursor || 1;
     const language = detectLanguage(input);
@@ -79,6 +79,7 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
 
 export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
     // console.log("item", input);
+    ctx.requestCache([input.ids.id, input.language]);
     const id = input.ids.id;
     const language = detectLanguage(input);
 
@@ -113,7 +114,9 @@ export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
     const [streamData, itemData] = await Promise.all([
         streamDataP,
         itemDataP,
-    ]).catch(() => Promise.reject(`Unable to get data for ${id}`));
+    ]).catch(() =>
+        Promise.reject(`Unable to parse arte JSON output for ${id}`)
+    );
 
     const firstStreamObj = streamData.data.attributes.streams[0];
     const firstItem = itemData[0];
