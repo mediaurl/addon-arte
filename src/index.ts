@@ -1,4 +1,4 @@
-import { createWorkerAddon } from "@watchedcom/sdk";
+import { createWorkerAddon, runCli } from "@watchedcom/sdk";
 import { directoryHandler, itemHandler } from "./handlers";
 
 export const arteAddon = createWorkerAddon({
@@ -31,3 +31,5 @@ export const arteAddon = createWorkerAddon({
 arteAddon.registerActionHandler("directory", directoryHandler);
 
 arteAddon.registerActionHandler("item", itemHandler);
+
+runCli([arteAddon], { singleMode: true });

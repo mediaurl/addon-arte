@@ -11,6 +11,7 @@ import {
     SingleItemResponse,
 } from "./arte";
 import * as striptags from "striptags";
+import { arteAddon } from ".";
 
 const supportedLanguages = ["en", "fr", "de", "es", "pl", "it"];
 
@@ -134,7 +135,7 @@ export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
         description: firstItem.description,
         sources: [firstStreamObj].map((_) => ({
             type: "url",
-            url: _.url,
+            url: `watched-addon-arte:${language}/${id}`,
         })),
     };
 };

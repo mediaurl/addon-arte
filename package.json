@@ -1,34 +1,34 @@
 {
-  "name": "watched-addon-arte",
-  "version": "0.0.0",
-  "main": "dist",
-  "scripts": {
-    "build": "tsc",
-    "start": "watched-sdk start --single --prod",
-    "develop": "watched-sdk start --single"
-  },
-  "dependencies": {
-    "@watchedcom/sdk": "^0.26.8",
-    "cheerio": "^0.22.0",
-    "qs": "^6.9.3",
-    "striptags": "^3.1.1"
-  },
-  "devDependencies": {
-    "@types/qs": "^6.9.1",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.1.3",
-    "prettier": "^2.0.4",
-    "typescript": "^3.8.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
+    "name": "watched-addon-arte",
+    "version": "0.0.0",
+    "main": "dist",
+    "scripts": {
+        "build": "tsc",
+        "start": "node .",
+        "develop": "ts-node-dev --transpileOnly src"
+    },
+    "dependencies": {
+        "@watchedcom/sdk": "^0.31.1",
+        "cheerio": "^0.22.0",
+        "qs": "^6.9.4",
+        "striptags": "^3.1.1"
+    },
+    "devDependencies": {
+        "@types/qs": "^6.9.2",
+        "husky": "^4.2.5",
+        "lint-staged": "^10.2.2",
+        "prettier": "^2.0.4",
+        "typescript": "^3.8.3"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,ts,tsx,css,md}": [
+            "prettier --write",
+            "git add"
+        ]
     }
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx,css,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  }
 }
