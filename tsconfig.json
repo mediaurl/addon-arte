@@ -1,11 +1,9 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "strictNullChecks": true,
-    "outDir": "dist",
-    "esModuleInterop": true
-  },
-  "include": [
-    "src/index.ts"
-  ]
+    "compilerOptions": {
+        "target": "es5",
+        "strictNullChecks": true,
+        "outDir": "dist",
+        "esModuleInterop": true
+    },
+    "include": ["src/index.ts"]
 }
