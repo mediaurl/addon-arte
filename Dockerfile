@@ -9,6 +9,7 @@ FROM node:14-alpine AS deps
 WORKDIR /code
 COPY package.json package-lock.json ./
 RUN npm ci --production
+RUN npm i @mediaurl/redis-cache
 
 FROM node:14-alpine
 WORKDIR /code
