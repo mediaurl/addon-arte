@@ -1,8 +1,17 @@
-FROM node:13
-LABEL version="1.0"
+FROM node:14-alpine AS build
 WORKDIR /code
-COPY package.json ./
-RUN npm i
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
 RUN npm run build
-CMD npm run start
+
+FROM node:14-alpine AS deps
+WORKDIR /code
+COPY package.json package-lock.json ./
+RUN npm ci --production
+
+FROM node:14-alpine
+WORKDIR /code
+COPY --from=build /code/dist ./dist/
+COPY --from=deps /code/node_modules ./node_modules/
+CMD node dist

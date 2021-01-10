@@ -2,7 +2,7 @@ import {
     WorkerHandlers,
     ChannelItem,
     DefaultAddonRequest,
-} from "@watchedcom/sdk";
+} from "@mediaurl/sdk";
 import * as querystring from "qs";
 import {
     VideoListResponse,
@@ -10,7 +10,7 @@ import {
     StreamResponse,
     SingleItemResponse,
 } from "./arte";
-import * as striptags from "striptags";
+import striptags from "striptags";
 import { arteAddon } from ".";
 
 const supportedLanguages = ["en", "fr", "de", "es", "pl", "it"];
@@ -37,10 +37,13 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
     input,
     ctx
 ) => {
-    await ctx.requestCache(input);
     const sort = input.sort || "MOST_VIEWED";
     const page: number = <number>input.cursor || 1;
     const language = detectLanguage(input);
+    await ctx.requestCache(
+        [input.sort, input.cursor, language, input.region, input.search],
+        { ttl: "7d", refreshInterval: "1d" }
+    );
 
     if (input.search) {
         const searchP = ctx
@@ -79,8 +82,10 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
 };
 
 export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
-    // console.log("item", input);
-    ctx.requestCache([input.ids.id, input.language]);
+    await ctx.requestCache([input.ids.id, input.language, input.region], {
+        ttl: "7d",
+        refreshInterval: "1d",
+    });
     const id = input.ids.id;
     const language = detectLanguage(input);
 
@@ -135,7 +140,7 @@ export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
         description: firstItem.description,
         sources: [firstStreamObj].map((_) => ({
             type: "url",
-            url: `watched-addon-arte:${language}/${id}`,
+            url: `mediaurl-arte:${language}/${id}`,
         })),
     };
 };
