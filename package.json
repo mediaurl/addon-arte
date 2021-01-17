@@ -8,15 +8,15 @@
         "develop": "ts-node-dev --transpileOnly src"
     },
     "dependencies": {
-        "@mediaurl/sdk": "^1.0.1",
+        "@mediaurl/sdk": "^1.1.0",
         "cheerio": "0.22.0",
-        "qs": "6.9.4",
+        "qs": "^6.9.6",
         "striptags": "3.1.1"
     },
     "devDependencies": {
-        "@types/node": "^14.14.20",
+        "@types/node": "^14.14.21",
         "@types/qs": "6.9.5",
-        "husky": "4.3.7",
+        "husky": "^4.3.8",
         "lint-staged": "10.5.3",
         "prettier": "2.2.1",
         "ts-node-dev": "1.1.1",
