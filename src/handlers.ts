@@ -1,5 +1,5 @@
 import {
-    WorkerHandlers,
+    ActionHandlers,
     ChannelItem,
     DefaultAddonRequest,
 } from "@mediaurl/sdk";
@@ -33,10 +33,7 @@ const mapItem = (_: ListItem): ChannelItem => {
     };
 };
 
-export const directoryHandler: WorkerHandlers["directory"] = async (
-    input,
-    ctx
-) => {
+export const catalogHandler: ActionHandlers["catalog"] = async (input, ctx) => {
     const sort = input.sort || "MOST_VIEWED";
     const page: number = <number>input.cursor || 1;
     const language = detectLanguage(input);
@@ -81,7 +78,7 @@ export const directoryHandler: WorkerHandlers["directory"] = async (
     };
 };
 
-export const itemHandler: WorkerHandlers["item"] = async (input, ctx) => {
+export const itemHandler: ActionHandlers["item"] = async (input, ctx) => {
     await ctx.requestCache([input.ids.id, input.language, input.region], {
         ttl: "7d",
         refreshInterval: "1d",

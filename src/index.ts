@@ -1,7 +1,7 @@
-import { createWorkerAddon, runCli } from "@mediaurl/sdk";
-import { directoryHandler, itemHandler } from "./handlers";
+import { createAddon, runCli } from "@mediaurl/sdk";
+import { catalogHandler, itemHandler } from "./handlers";
 
-export const arteAddon = createWorkerAddon({
+export const arteAddon = createAddon({
     id: "arte",
     name: "ARTE",
     description: "ARTE, the European culture TV channel",
@@ -28,7 +28,7 @@ export const arteAddon = createWorkerAddon({
     },
 });
 
-arteAddon.registerActionHandler("directory", directoryHandler);
+arteAddon.registerActionHandler("catalog", catalogHandler);
 
 arteAddon.registerActionHandler("item", itemHandler);
 
